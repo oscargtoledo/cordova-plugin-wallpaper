@@ -94,7 +94,12 @@ wallpaper.prototype.setImageHttp = function(url, type, callback) {
                 raw += String.fromCharCode.apply(null, subArray);
             }
             var base64 = btoa(raw);
-            setBase64(base64, type, callback);
+            if (type == "both") {
+                setBase64(base64, callback);
+                setBase64(base64, "lock", callback);
+            } else {
+                setBase64(base64, type, callback);
+            }
         }
         function XHRerror(error) {
             typeof callback === 'function' && callback(error);
