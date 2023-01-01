@@ -15,7 +15,7 @@ This simple plugin gives you the ability of setting the systems wallpaper, eithe
 
 ## Installation
 ```
-cordova plugin add https://github.com/ragcsalo/cordova-plugin-wallpaper.git
+cordova plugin add https://github.com/oscargtoledo/cordova-plugin-wallpaper.git
 ```
 
 ## Usage
