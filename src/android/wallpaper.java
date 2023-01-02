@@ -98,7 +98,8 @@ public class wallpaper extends CordovaPlugin
 				bitmap = BitmapFactory.decodeStream(instr);
 			}
 			WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
-			myWallpaperManager.setBitmap(bitmap);
+			myWallpaperManager.setBitmap(bitmap,new Rect(0,0,bitmap.getWidth()-1,bitmap.getHeight()-1),false);
+
 			Log.d("console", "homescreen wallpaper set");
 		}
 		catch (IOException e)
@@ -126,7 +127,7 @@ public class wallpaper extends CordovaPlugin
 			}
 			if (android.os.Build.VERSION.SDK_INT>=24) {
 				WallpaperManager ujWallpaperManager = WallpaperManager.getInstance(context);
-				ujWallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK);
+				ujWallpaperManager.setBitmap(bitmap, new Rect(0,0,bitmap.getWidth()-1,bitmap.getHeight()-1), true, WallpaperManager.FLAG_LOCK);
 				Log.d("console", "lockscreen wallpaper set");
 			}
 		}
