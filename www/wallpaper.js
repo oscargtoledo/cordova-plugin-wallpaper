@@ -74,6 +74,8 @@ cordova.define(
       var action = 'start'; //future actions new entries. Fixed.
       if (type == 'lock') {
         action = 'lockscreen';
+      } else if (type == 'both') {
+        action = 'both';
       }
       if (base64) {
         cordova.exec(
