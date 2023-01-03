@@ -56,6 +56,46 @@ public class wallpaper extends CordovaPlugin
 			callbackContext.sendPluginResult(pr);
 			return true;
 		}
+		else if (action.equals("both")){
+			String imageSrc = args.getString(0);
+			Boolean imageData = args.getBoolean(1);
+			
+			cordova.getActivity().runOnUiThread(new Runnable() {
+				public void run() {
+					try {
+						AssetManager assetManager = context.getAssets();
+						Bitmap bitmap;
+						if (imageData) // Base64 encoded
+						{
+							byte[] decoded = android.util.Base64.decode(imageSrc, android.util.Base64.DEFAULT);
+							bitmap = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
+						} else // normal path
+						{
+							InputStream instr = assetManager.open("www/" + imageSrc);
+							bitmap = BitmapFactory.decodeStream(instr);
+						}
+						if (android.os.Build.VERSION.SDK_INT >= 24) {
+							WallpaperManager ujWallpaperManager = WallpaperManager.getInstance(context);
+							ujWallpaperManager.setBitmap(bitmap,
+									new Rect(0, 0, bitmap.getWidth() - 1, bitmap.getHeight() - 1),
+									true, WallpaperManager.FLAG_LOCK);
+							ujWallpaperManager.setBitmap(bitmap,
+									new Rect(0, 0, bitmap.getWidth() - 1, bitmap.getHeight() - 1), false);
+							Log.d("console", "both wallpaper set");
+							callbackContext.success();
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+
+			PluginResult pr = new PluginResult(PluginResult.Status.OK);
+			pr.setKeepCallback(true);
+			callbackContext.sendPluginResult(pr);
+			return true;
+		}
 		else if (action.equals("save_homescreen_wp"))
 		{
 			final WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
